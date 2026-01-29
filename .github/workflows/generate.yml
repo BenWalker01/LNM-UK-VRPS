@@ -1,8 +1,6 @@
 name: Generate and Publish CSV
 
 on:
-    schedule:
-        - cron: "0 0 * * *"
     workflow_dispatch:
 
 jobs:
@@ -11,7 +9,7 @@ jobs:
 
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v5
 
             - name: Update CSV
               id: update
@@ -27,7 +25,7 @@ jobs:
                 git push
 
             - name: Upload output
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                 name: output
                 path: output.txt
@@ -39,7 +37,7 @@ jobs:
 
       steps:
         - name: Download output
-          uses: actions/download-artifact@v2
+          uses: actions/download-artifact@v4
           with:
             name: output
     
@@ -51,7 +49,7 @@ jobs:
         
         - name: Checkout code
           if: ${{ steps.output.outputs.result == 'CSV Generated' }}
-          uses: actions/checkout@v2
+          uses: actions/checkout@v5
           with:
             fetch-depth: 0
 
